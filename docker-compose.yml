@@ -1,0 +1,42 @@
+version: '3'
+services:
+
+  app:
+    container_name: container_app
+    build:
+      context: .
+      args:
+        - NEWUSER_UID=${DOCKER_USER_UID:-1000}
+        - NEWUSER_GID=${DOCKER_USER_GID:-1000}
+    image: crawling_of_currencies_app
+    working_dir: /app
+    ports:
+      - "${DOCKER_HOST_HTTP_PORT:-8000}:80"
+    volumes:
+      - ./src:/app
+    networks:
+      - crawling-of-currencies
+    depends_on:
+      - db
+
+  db:
+    container_name: container_db
+    image: mariadb:10.4
+    user: ${DOCKER_USER_UID:-root}:${DOCKER_USER_GID:-root}
+    ports:
+      - "${DOCKER_HOST_DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASES_TO_CREATE: "crawlingOfCurrenciesDB"
+    volumes:
+      - ./docker/mariadb/create-databases.sh:/docker-entrypoint-initdb.d/create-databases.sh
+      - ./docker/mariadb/data:/var/lib/mysql
+    networks:
+      - crawling-of-currencies
+
+networks:
+  crawling-of-currencies:
+    driver: bridge
