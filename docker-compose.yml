@@ -18,6 +18,7 @@ services:
       - crawling-of-currencies
     depends_on:
       - db
+      - redis
 
   db:
     container_name: container_db
@@ -34,6 +35,16 @@ services:
     volumes:
       - ./docker/mariadb/create-databases.sh:/docker-entrypoint-initdb.d/create-databases.sh
       - ./docker/mariadb/data:/var/lib/mysql
+    networks:
+      - crawling-of-currencies
+
+  redis:
+    container_name: container_redis
+    image: redis:6.2
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./docker/redis/data:/data
     networks:
       - crawling-of-currencies
 

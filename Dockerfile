@@ -9,7 +9,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 
 RUN	apt-get update
 
-RUN apt install nodejs npm -y
+RUN apt install nodejs npm -y curl && \
+    npm install -g n && \
+    n stable
 
 # Instalando extensões do php
 RUN docker-php-ext-install pdo pdo_mysql && \
