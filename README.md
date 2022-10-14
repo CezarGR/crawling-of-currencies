@@ -17,6 +17,7 @@ Entre na pasta raiz do projeto clonado, abra o terminal e insira o seguinte cód
 obs: é necessário ter em sua máquina o docker e o docker compose instado, senão acesse o [link](https://docs.docker.com/compose/install/) para efetuar o download.
 
 ```bash
+docker compose build
 docker-compose up -d
 ```
 
@@ -37,7 +38,11 @@ Em seguida, já dentro do container, instale as dependências executando o coman
 /app# npm install
 ```
 
-## 4. Acessar a documentação
+## 4. Configuração
+
+Ao terminar de instalar as dependências, configure o seu ambiente. O arquivo .env para as configurações do Docker se encontra no caminho **raiz_do_projeto/.env** e para o projeto da API no caminho **raiz_do_projeto/src/.env**
+
+## 5. Acessar a documentação
 
 Há, dentro do projeto, uma rota que tem como responsabilidade exibir a documentação da API (/api/documentation), para isso foi utilizado o [Swagger](https://swagger.io/).
 
