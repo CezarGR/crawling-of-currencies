@@ -9,12 +9,12 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 
 RUN	apt-get update
 
-RUN apt install nodejs npm -y curl && \
+RUN apt install nodejs npm zip unzip libzip-dev curl -y && \
     npm install -g n && \
     n stable
 
 # Instalando extensões do php
-RUN docker-php-ext-install pdo pdo_mysql && \
+RUN docker-php-ext-install pdo pdo_mysql zip && \
     pecl install redis && \
     docker-php-ext-enable redis && \
     rm -rf /tmp/pear
