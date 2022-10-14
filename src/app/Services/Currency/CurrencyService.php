@@ -41,7 +41,7 @@ class CurrencyService
 
         throw_if(
             $currencyDetails->isEmpty(),
-            new Exception('Erro ao procurar informações utilizando o código como parâmetro')
+            new Exception('Erro ao obter informações utilizando o código ISO como parâmetro')
         );
         
         $currencyEntities = $this->createCurrencyAndLocation(
@@ -75,7 +75,7 @@ class CurrencyService
 
         throw_if(
             $currencyDetails->isEmpty(),
-            new Exception('Erro ao procurar informacoes da moeda pelo código')
+            new Exception('Erro ao obter informações utilizando o número ISO como parâmetro')
         );
         
         $currencyEntities = $this->createCurrencyAndLocation(
