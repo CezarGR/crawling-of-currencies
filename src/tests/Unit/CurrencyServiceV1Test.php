@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Services\Currency\CurrencyService;
+use App\Services\v1\Currency\CurrencyService;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Support\Str;

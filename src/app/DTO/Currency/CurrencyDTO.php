@@ -2,8 +2,9 @@
 
 namespace App\DTO\Currency;
 
-use App\Models\Currency;
+use App\DTO\Crawling\CrawlingCurrencyDTO;
 use Illuminate\Support\Collection;
+use App\Models\Currency;
 
 class CurrencyDTO 
 {
@@ -39,6 +40,21 @@ class CurrencyDTO
             decimalPlaces: $currency->decimal_places,
             symbol:  $currency->symbol,
             locations: $currency->locations->map(fn ($location) => CurrencyLocationDTO::fromCurrencyLocationModel($location))
+        );
+    }
+
+    public static function fromCrawlingCurrencyDTO(CrawlingCurrencyDTO $crawlingCurrencyDTO) 
+    {
+        return new self(
+            name: $crawlingCurrencyDTO->name,
+            number: $crawlingCurrencyDTO->number,
+            code: $crawlingCurrencyDTO->code,
+            decimalPlaces: $crawlingCurrencyDTO->decimalPlaces,
+            symbol:  $crawlingCurrencyDTO->symbol,
+            locations: collect($crawlingCurrencyDTO->locations)
+                ->map(function ($item) {
+                    return new CurrencyLocationDTO(data_get($item, 'location'), data_get($item, 'icon'));
+                })
         );
     }
 

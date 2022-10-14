@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Crawling;
+namespace App\Services\v1\Crawling;
 
 use Goutte\Client;
 use Illuminate\Support\Collection;

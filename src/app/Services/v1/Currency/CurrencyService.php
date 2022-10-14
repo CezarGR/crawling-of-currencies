@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Currency;
+namespace App\Services\v1\Currency;
 
-use App\Services\Crawling\CurrencyCrawlingService;
+use App\Services\v1\Crawling\CurrencyCrawlingService;
 use App\Repositories\Currency\CurrencyRepository;
 use App\DTO\Currency\CurrencyLocationDTO;
 use Illuminate\Support\Collection;

@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Services\Crawling\CurrencyCrawlingService;
+use App\Services\v1\Crawling\CurrencyCrawlingService;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 
-class CurrencyCrawlingTest extends TestCase
+class CurrencyCrawlingV1Test extends TestCase
 {    
     public function test_currency_crawling_iso_by_codes()
     {

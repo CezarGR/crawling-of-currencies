@@ -9,12 +9,12 @@ class CurrencySearchTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_search_currency_by_code()
+    public function test_v1_search_currency_by_code()
     {
         $code = 'EUR';
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code' => $code
             ]
@@ -27,12 +27,12 @@ class CurrencySearchTest extends TestCase
         ]);
     }
 
-    public function test_search_currencies_by_codes()
+    public function test_v1_search_currencies_by_codes()
     {
         $code = ['EUR','CLF','CLP','CNY','COP','COU','CRC','CUC','CUP','CVE','CZK','DJF','DKK','DOP','DZD','ECS','EGP','ERN','ETB','BRL'];
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code_list' => $code
             ]
@@ -46,12 +46,12 @@ class CurrencySearchTest extends TestCase
         $response->assertJsonCount(20, 'data');
     }
 
-    public function test_search_currencies_by_codes_duplicate()
+    public function test_v1_search_currencies_by_codes_duplicate()
     {
         $codes = ['EUR','BRL','EUR','BRL'];
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code' => $codes
             ]
@@ -65,12 +65,12 @@ class CurrencySearchTest extends TestCase
         $response->assertJsonCount(2, 'data');
     }
 
-    public function test_search_currency_by_number()
+    public function test_v1_search_currency_by_number()
     {
         $number = 978;
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number' => $number
             ]
@@ -83,12 +83,12 @@ class CurrencySearchTest extends TestCase
         ]);
     }
 
-    public function test_search_currencies_by_numbers()
+    public function test_v1_search_currencies_by_numbers()
     {
         $numbers = [976,947,756,948,990,152,156,170,970,188,931];
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number_list' => $numbers
             ]
@@ -102,12 +102,12 @@ class CurrencySearchTest extends TestCase
         $response->assertJsonCount(count($numbers), 'data');
     }
 
-    public function test_search_currencies_by_numbers_duplicate()
+    public function test_v1_search_currencies_by_numbers_duplicate()
     {
         $numbers = [976,947,976,947];
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number_list' => $numbers
             ]
@@ -121,10 +121,10 @@ class CurrencySearchTest extends TestCase
         $response->assertJsonCount(2, 'data');
     }
 
-    public function test_serd_request_search_currencies_by_code_null_and_empty()
+    public function test_v1_serd_request_search_currencies_by_code_null_and_empty()
     {
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code' => null
             ]
@@ -132,12 +132,12 @@ class CurrencySearchTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'Erro', 
+            'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
         ]);
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code' => ''
             ]
@@ -145,15 +145,15 @@ class CurrencySearchTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'Erro', 
+            'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
         ]);
     }
 
-    public function test_serd_request_search_currencies_by_number_null_and_empty()
+    public function test_v1_serd_request_search_currencies_by_number_null_and_empty()
     {
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number' => null
             ]
@@ -161,12 +161,12 @@ class CurrencySearchTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'Erro', 
+            'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
         ]);
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number' => ''
             ]
@@ -174,7 +174,179 @@ class CurrencySearchTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'Erro', 
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => true
+        ]);
+    }
+
+    // V2
+
+    public function test_v2_search_currency_by_code()
+    {
+        $code = ['EUR'];
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => $code
+            ]
+        );
+
+        $response->assertSuccessful();
+        $response->assertJson([
+            'message' => true, 
+            'data' => true
+        ]);
+    }
+
+    public function test_v2_search_currencies_by_codes()
+    {
+        $codes = ['EUR','CLF','CLP','CNY','COP','COU','CRC','CUC','CUP','CVE','CZK','DJF','DKK','DOP','DZD','ECS','EGP','ERN','ETB','BRL'];
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => $codes
+            ]
+        );
+
+        $response->assertSuccessful();
+        $response->assertJson([
+            'message' => 'Informações sobre as moedas retornada com sucesso', 
+            'data' => true
+        ]);
+        $response->assertJsonCount(count($codes), 'data');
+    }
+
+    public function test_v2_search_currencies_by_codes_duplicate()
+    {
+        $codes = ['EUR','BRL','EUR','BRL'];
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => $codes
+            ]
+        );
+
+        $response->assertSuccessful();
+        $response->assertJson([
+            'message' => 'Informações sobre as moedas retornada com sucesso', 
+            'data' => true
+        ]);
+        $response->assertJsonCount(2, 'data');
+    }
+
+    public function test_v2_search_currency_by_number()
+    {
+        $number = ['978'];
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'numbers' => $number
+            ]
+        );
+
+        $response->assertSuccessful();
+        $response->assertJson([
+            'message' => true, 
+            'data' => true
+        ]);
+    }
+
+    public function test_v2_search_currencies_by_numbers()
+    {
+        $numbers = ['976','947','756','948','990','152','156','170','970','188','931'];
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'numbers' => $numbers
+            ]
+        );
+
+        $response->assertSuccessful();
+        $response->assertJson([
+            'message' => 'Informações sobre as moedas retornada com sucesso', 
+            'data' => true
+        ]);
+        $response->assertJsonCount(count($numbers), 'data');
+    }
+
+    public function test_v2_search_currencies_by_numbers_duplicate()
+    {
+        $numbers = ['976','947','976','947'];
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'numbers' => $numbers
+            ]
+        );
+
+        $response->assertSuccessful();
+        $response->assertJson([
+            'message' => 'Informações sobre as moedas retornada com sucesso', 
+            'data' => true
+        ]);
+        $response->assertJsonCount(2, 'data');
+    }
+
+    public function test_v2_serd_request_search_currencies_by_code_null_and_empty()
+    {
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => null
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => true
+        ]);
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => ''
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => true
+        ]);
+    }
+
+    public function test_v2_serd_request_search_currencies_by_number_null_and_empty()
+    {
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'numbers' => null
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => true
+        ]);
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'numbers' => ''
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
         ]);
     }
