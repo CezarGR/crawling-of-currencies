@@ -38,11 +38,21 @@ Em seguida, já dentro do container, instale as dependências executando o coman
 /app# npm install
 ```
 
-## 4. Configuração
+## 4. Configuração do banco de dados
+
+Primeiramente, vá até o gerenciado de banco de dados de sua escolha e crie uma nova conexão com os valores do .env (**raiz_do_projeto/.env**).
+
+Após a conexão ser realizada com sucesso, crie uma nova base de dados **crawlingOfCurrenciesDB**. Volte para terminal interno do **container_app** e excute o comando:
+
+```bash
+/app# php artisan migrate
+```
+
+## 5. Configuração
 
 Ao terminar de instalar as dependências, configure o seu ambiente. O arquivo .env para as configurações do Docker se encontra no caminho **raiz_do_projeto/.env** e para o projeto da API no caminho **raiz_do_projeto/src/.env**
 
-## 5. Acessar a documentação
+## 6. Acessar a documentação
 
 Há, dentro do projeto, uma rota que tem como responsabilidade exibir a documentação da API (/api/documentation), para isso foi utilizado o [Swagger](https://swagger.io/).
 
