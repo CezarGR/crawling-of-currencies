@@ -22,7 +22,7 @@ trait CacheTrait
         $instance->isUseCache = true;
         $instance->cacheName = $cacheName;
         
-        $instance->cacheData = Cache::remember($cacheName, 10, fn () => self::all());
+        $instance->cacheData = Cache::remember($cacheName, 300, fn () => self::all());
       
         return $instance;
     }
@@ -34,7 +34,7 @@ trait CacheTrait
         if ($record->isEmpty()) {
             Cache::forget($this->cacheName);
 
-            $this->cacheData = Cache::remember($this->cacheName, 10, fn () => self::all());
+            $this->cacheData = Cache::remember($this->cacheName, 300, fn () => self::all());
 
             $this->cacheData = $this->cacheData->where($column, $operation, $value);
             return $this;
@@ -51,7 +51,7 @@ trait CacheTrait
         if ($record->isEmpty()) {
             Cache::forget($this->cacheName);
 
-            $this->cacheData = Cache::remember($this->cacheName, 10, fn () => self::all());
+            $this->cacheData = Cache::remember($this->cacheName, 300, fn () => self::all());
             $this->cacheData = $this->cacheData->whereIn($column, $value);
             return $this;
         }
@@ -67,7 +67,7 @@ trait CacheTrait
         if (empty($record)) {
             Cache::forget($this->cacheName);
 
-            $this->cacheData = Cache::remember($this->cacheName, 10, fn () => self::all());
+            $this->cacheData = Cache::remember($this->cacheName, 300, fn () => self::all());
 
             return $this->cacheData->firstWhere($column, $operation, $value);
         }
