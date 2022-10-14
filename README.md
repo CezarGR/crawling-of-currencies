@@ -42,7 +42,7 @@ Em seguida, já dentro do container, instale as dependências executando o coman
 
 Primeiramente, vá até o gerenciado de banco de dados de sua escolha e crie uma nova conexão com os valores do .env (**raiz_do_projeto/.env**).
 
-Após a conexão ser realizada com sucesso, crie uma nova base de dados **crawlingOfCurrenciesDB**. Volte para terminal interno do **container_app** e excute o comando:
+Após a conexão ser realizada com sucesso, volte para terminal interno do **container_app** e excute o comando:
 
 ```bash
 /app# php artisan migrate
