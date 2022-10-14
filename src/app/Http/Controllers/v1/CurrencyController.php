@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\v1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CurrencyCrawlingRequest;
 use App\Http\Resources\CurrencySearchResource;
 use App\Services\Currency\CurrencyService;
