@@ -37,9 +37,6 @@ Em seguida, já dentro do container, instale as dependências executando o coman
 ```bash
 /app# composer install
 ```
-```bash
-/app# npm install
-```
 
 ## 4. Configuração do banco de dados
 
