@@ -2,16 +2,16 @@
 
 namespace Tests\Unit;
 
-use App\Services\v1\Crawling\CurrencyCrawlingService as CurrencyCrawlingServiceV1;
+use App\Services\v1\Crawling\CurrencyCrawlingService;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 
-class CurrencyCrawlingTest extends TestCase
+class CurrencyCrawlingV1Test extends TestCase
 {    
     public function test_currency_crawling_iso_by_codes()
     {
         $codes = ['EUR','BRL','EUR','BRL'];
-        $result =(new CurrencyCrawlingServiceV1)->crawlCurrencyISOByCodes($codes);
+        $result =(new CurrencyCrawlingService)->crawlCurrencyISOByCodes($codes);
 
         $this->assertTrue($result instanceof Collection);
         $this->assertTrue($result->count() == 2);
@@ -20,7 +20,7 @@ class CurrencyCrawlingTest extends TestCase
     public function test_currency_symbol_crawling_by_codes()
     {
         $codes = ['EUR','BRL','EUR','BRL'];
-        $result =(new CurrencyCrawlingServiceV1)->crawlCurrencySymbolByCodes($codes);
+        $result =(new CurrencyCrawlingService)->crawlCurrencySymbolByCodes($codes);
 
         $this->assertTrue($result instanceof Collection);
         $this->assertTrue($result->count() == 2);
@@ -31,7 +31,7 @@ class CurrencyCrawlingTest extends TestCase
     public function test_currency_symbol_crawling_by_text_number_start_with_zero()
     {
         $numbers = ['051', '032', '036'];
-        $result =(new CurrencyCrawlingServiceV1)->crawlCurrencySymbolByNumbers($numbers);
+        $result =(new CurrencyCrawlingService)->crawlCurrencySymbolByNumbers($numbers);
 
         $this->assertTrue($result instanceof Collection);
         $this->assertTrue($result->count() == count($numbers));
