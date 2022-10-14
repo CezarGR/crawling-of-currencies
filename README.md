@@ -20,7 +20,6 @@ Entre na pasta raiz do projeto clonado, abra o terminal e insira o seguinte cód
 obs: é necessário ter em sua máquina o docker e o docker compose instado, senão acesse o [link](https://docs.docker.com/compose/install/) para efetuar o download.
 
 ```bash
-docker compose build
 docker-compose up -d
 ```
 
@@ -30,6 +29,7 @@ Agora, entre no Container App, para isso excute o seguinte código em seu termin
 
 ```bash
 docker exec -it container_app bash
+chgrp www-data storage/ -R
 ```
 
 Em seguida, já dentro do container, instale as dependências executando o comando:
