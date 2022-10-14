@@ -8,6 +8,9 @@ Eu sei que você já sabe, mas...
 
 ```bash
 git clone https://github.com/CezarGR/crawling-of-currencies.git
+cd crawling-of-currencies
+cp .env.example .env
+cp src/.env.example src/.env
 ```
 
 ## 2. Rodar o container
