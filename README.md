@@ -23,7 +23,7 @@ docker-compose up -d
 
 ## 3. Instalar as dependências
 
-Agora, entre dentro do Container App, para isso excute o seguinte código em seu terminal na raiz do projeto:
+Agora, entre no Container App, para isso excute o seguinte código em seu terminal na raiz do projeto:
 
 ```bash
 docker exec -it container_app bash
