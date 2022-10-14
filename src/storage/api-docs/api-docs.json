@@ -1,0 +1,88 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Prejro Crawling of Currencies",
+        "contact": {
+            "email": "cgabriel.lourenzo@gmail.com"
+        },
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8083"
+        }
+    ],
+    "paths": {
+        "v1/currencies/search": {
+            "post": {
+                "tags": [
+                    "Currencies V1"
+                ],
+                "summary": "Retorna informacões da uma ou varias moedas",
+                "description": "Essa rota tem a função de realizar uma busca de informações sobre uma terminada moedas, para isso foi usado uma técnica de Crawling se utilizando do código ou numero ISO 4217 (padrão internacional que define códigos de três letras para as moedas) para efetuar a captura dos dados.",
+                "operationId": "2ff5a5b199777b9941e6443199154e5d",
+                "requestBody": {
+                    "description": "É possível realiza a busca de várias maneiras utilizando as propriedades code, code_list, number ou number_list.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "type": "string"
+                                    },
+                                    "code_list": {
+                                        "type": "[string]"
+                                    },
+                                    "number": {
+                                        "type": "integer"
+                                    },
+                                    "number_list": {
+                                        "type": "[integer]"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "code": "BRL"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "Exemplo de um retorno de sucesso",
+                                        "value": {
+                                            "message": "Informações sobre a moeda retornada com sucesso",
+                                            "data": [
+                                                {
+                                                    "name": "Real",
+                                                    "code": "BRL",
+                                                    "number": "986",
+                                                    "symbol": "R$",
+                                                    "decimal_places": 2,
+                                                    "locations": [
+                                                        {
+                                                            "location": " Brasil",
+                                                            "icon": null
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

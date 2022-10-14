@@ -2,7 +2,11 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Spatie\FlareClient\Http\Exceptions\NotFound;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,7 +48,16 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+        });
+
+        $this->renderable(function (ValidationException $e) {
+            return response()->json(
+                [
+                    'message' => 'Um erro inesperado aconteceu.',
+                    'erros' => $e->validator->errors()
+                ],
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
         });
     }
 }
