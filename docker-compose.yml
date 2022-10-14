@@ -11,7 +11,7 @@ services:
     image: crawling_of_currencies_app
     working_dir: /app
     ports:
-      - "${DOCKER_HOST_HTTP_PORT:-8000}:80"
+      - "${DOCKER_HOST_HTTP_PORT_API:-8000}:80"
     volumes:
       - ./src:/app
     networks:
@@ -31,7 +31,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASES_TO_CREATE: "crawlingOfCurrenciesDB"
+      MYSQL_DATABASES_TO_CREATE: "${DB_DATABASE}"
     volumes:
       - ./docker/mariadb/create-databases.sh:/docker-entrypoint-initdb.d/create-databases.sh
       - ./docker/mariadb/data:/var/lib/mysql
@@ -42,7 +42,7 @@ services:
     container_name: container_redis
     image: redis:6.2
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:6379"
     volumes:
       - ./docker/redis/data:/data
     networks:
