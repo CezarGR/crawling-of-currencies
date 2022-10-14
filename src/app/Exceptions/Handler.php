@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
         $this->renderable(function (ValidationException $e) {
             return response()->json(
                 [
-                    'message' => 'Erro',
+                    'message' => 'Um erro inesperado aconteceu.',
                     'erros' => $e->validator->errors()
                 ],
                 Response::HTTP_UNPROCESSABLE_ENTITY
