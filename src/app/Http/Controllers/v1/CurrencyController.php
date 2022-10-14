@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CurrencyCrawlingRequest;
-use App\Http\Resources\CurrencySearchResource;
-use App\Services\Currency\CurrencyService;
+use App\Http\Requests\v1\CurrencyCrawlingRequest;
+use App\Http\Resources\v1\CurrencySearchResource;
+use App\Services\v1\Currency\CurrencyService;
 use Illuminate\Support\Facades\DB;
-use Exception;
 use OpenApi\Annotations as OA;
+use Exception;
 
 class CurrencyController extends Controller
 {

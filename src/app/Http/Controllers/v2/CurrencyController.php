@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CurrencyCrawlingRequest;
-use App\Http\Resources\CurrencySearchResource;
-use App\Services\Currency\CurrencyService;
+use App\Http\Requests\v2\CurrencyCrawlingRequest;
+use App\Http\Resources\v2\CurrencySearchResource;
+use App\Services\v2\Currency\CurrencyService;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use OpenApi\Annotations as OA;
@@ -14,33 +14,25 @@ class CurrencyController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="v1/currencies/search",
-     *     tags={"Currencies V1"},
+     *     path="v2/currencies/search",
+     *     tags={"Currencies V2"},
      *     summary="Retorna informacões da uma ou varias moedas",
      *     description="Essa rota tem a função de realizar uma busca de informações sobre uma terminada moedas, para isso foi usado uma técnica de Crawling se utilizando do código ou numero ISO 4217 (padrão internacional que define códigos de três letras para as moedas) para efetuar a captura dos dados.",
      *     @OA\RequestBody(
-     *         description="É possível realiza a busca de várias maneiras utilizando as propriedades code, code_list, number ou number_list.",
+     *         description="É possível realiza a busca de várias maneiras utilizando as propriedades codes ou numbers.",
      *         required=true,
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 @OA\Property(
-     *                     property="code",
-     *                     type="string"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="code_list",
+     *                     property="codes",
      *                     type="[string]"
      *                 ),
      *                 @OA\Property(
-     *                     property="number",
-     *                     type="integer"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="number_list",
+     *                     property="numbers",
      *                     type="[integer]"
      *                 ),
-     *                 example={"code": "BRL"},
+     *                 example={"numbers": ["036"]},
      *             )
      *         )
      *     ),
@@ -87,13 +79,14 @@ class CurrencyController extends Controller
             
             return json_success_response(
                 CurrencySearchResource::collection($record),
-                count($request->codes) > 1 || count($request->numbers) > 1 ? 
+                count($request->codes ?? []) > 1 || count($request->numbers ?? []) > 1 ? 
                     'Informações sobre as moedas retornada com sucesso' : 
                     'Informações sobre a moeda retornada com sucesso'  
             );
             
         } catch (Exception $exception) {
             DB::rollBack();
+            dd($exception);
             return json_error_response(
                 empty($exception->getMessage()) ? 
                     "Erro ao rastrear informações sobre determinada moeda/moedas" : 

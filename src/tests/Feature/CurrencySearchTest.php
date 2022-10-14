@@ -14,7 +14,7 @@ class CurrencySearchTest extends TestCase
         $code = 'EUR';
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code' => $code
             ]
@@ -32,7 +32,7 @@ class CurrencySearchTest extends TestCase
         $code = ['EUR','CLF','CLP','CNY','COP','COU','CRC','CUC','CUP','CVE','CZK','DJF','DKK','DOP','DZD','ECS','EGP','ERN','ETB','BRL'];
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code_list' => $code
             ]
@@ -51,7 +51,7 @@ class CurrencySearchTest extends TestCase
         $codes = ['EUR','BRL','EUR','BRL'];
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code' => $codes
             ]
@@ -70,7 +70,7 @@ class CurrencySearchTest extends TestCase
         $number = 978;
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number' => $number
             ]
@@ -88,7 +88,7 @@ class CurrencySearchTest extends TestCase
         $numbers = [976,947,756,948,990,152,156,170,970,188,931];
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number_list' => $numbers
             ]
@@ -107,7 +107,7 @@ class CurrencySearchTest extends TestCase
         $numbers = [976,947,976,947];
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number_list' => $numbers
             ]
@@ -124,7 +124,7 @@ class CurrencySearchTest extends TestCase
     public function test_serd_request_search_currencies_by_code_null_and_empty()
     {
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code' => null
             ]
@@ -132,12 +132,12 @@ class CurrencySearchTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'Erro', 
+            'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
         ]);
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'code' => ''
             ]
@@ -145,7 +145,7 @@ class CurrencySearchTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'Erro', 
+            'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
         ]);
     }
@@ -153,7 +153,7 @@ class CurrencySearchTest extends TestCase
     public function test_serd_request_search_currencies_by_number_null_and_empty()
     {
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number' => null
             ]
@@ -161,12 +161,12 @@ class CurrencySearchTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'Erro', 
+            'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
         ]);
 
         $response = $this->post(
-            route('currencies.search'),
+            route('currencies.v1.search'),
             [
                 'number' => ''
             ]
@@ -174,7 +174,7 @@ class CurrencySearchTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'Erro', 
+            'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
         ]);
     }

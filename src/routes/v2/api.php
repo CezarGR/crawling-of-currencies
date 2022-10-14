@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\v2\CurrencyController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('currencies')->as('currencies.')->group(function () {
     Route::post('search', [CurrencyController::class, 'search'])
-        ->name('search');
+        ->name('v2.search');
 });
