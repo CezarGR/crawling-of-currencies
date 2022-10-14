@@ -8,6 +8,9 @@ Eu sei que você já sabe, mas...
 
 ```bash
 git clone https://github.com/CezarGR/crawling-of-currencies.git
+cd crawling-of-currencies
+cp .env.example .env
+cp src/.env.example src/.env
 ```
 
 ## 2. Rodar o container
@@ -17,16 +20,16 @@ Entre na pasta raiz do projeto clonado, abra o terminal e insira o seguinte cód
 obs: é necessário ter em sua máquina o docker e o docker compose instado, senão acesse o [link](https://docs.docker.com/compose/install/) para efetuar o download.
 
 ```bash
-docker compose build
 docker-compose up -d
 ```
 
 ## 3. Instalar as dependências
 
-Agora, entre dentro do Container App, para isso excute o seguinte código em seu terminal na raiz do projeto:
+Agora, entre no Container App, para isso excute o seguinte código em seu terminal na raiz do projeto:
 
 ```bash
 docker exec -it container_app bash
+chgrp www-data storage/ -R
 ```
 
 Em seguida, já dentro do container, instale as dependências executando o comando:
@@ -34,15 +37,12 @@ Em seguida, já dentro do container, instale as dependências executando o coman
 ```bash
 /app# composer install
 ```
-```bash
-/app# npm install
-```
 
 ## 4. Configuração do banco de dados
 
 Primeiramente, vá até o gerenciado de banco de dados de sua escolha e crie uma nova conexão com os valores do .env (**raiz_do_projeto/.env**).
 
-Após a conexão ser realizada com sucesso, crie uma nova base de dados **crawlingOfCurrenciesDB**. Volte para terminal interno do **container_app** e excute o comando:
+Após a conexão ser realizada com sucesso, volte para terminal interno do **container_app** e excute o comando:
 
 ```bash
 /app# php artisan migrate

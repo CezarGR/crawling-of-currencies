@@ -14,7 +14,7 @@ class CurrencyController extends Controller
 {
     /**
      * @OA\Post(
-     *     path="v1/currencies/search",
+     *     path="/api/v1/currencies/search",
      *     tags={"Currencies V1"},
      *     summary="Retorna informacões da uma ou varias moedas",
      *     description="Essa rota tem a função de realizar uma busca de informações sobre uma terminada moedas, para isso foi usado uma técnica de Crawling se utilizando do código ou numero ISO 4217 (padrão internacional que define códigos de três letras para as moedas) para efetuar a captura dos dados.",

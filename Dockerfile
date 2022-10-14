@@ -9,27 +9,21 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 
 RUN	apt-get update
 
-RUN apt install nodejs npm -y curl && \
+RUN apt install nodejs npm zip unzip libzip-dev curl -y && \
     npm install -g n && \
     n stable
 
 # Instalando extensões do php
-RUN docker-php-ext-install pdo pdo_mysql && \
+RUN docker-php-ext-install pdo pdo_mysql zip && \
     pecl install redis && \
     docker-php-ext-enable redis && \
     rm -rf /tmp/pear
 
 ## App configurations
-COPY ./src /app
 COPY ./docker/php.ini /usr/local/etc/php/php.ini
 WORKDIR /app
-RUN ["cp", ".env.example", ".env"]
-RUN composer install --no-cache --optimize-autoloader --no-dev
-
-RUN chown -R www-data:www-data *
 
 ## Apache configuration
 RUN a2enmod rewrite; \
-    chown -R www-data:www-data /app/storage; \
     rm -rf /var/www/html && \
     ln -s /app/public /var/www/html

@@ -13,14 +13,14 @@
         }
     ],
     "paths": {
-        "v1/currencies/search": {
+        "/api/v1/currencies/search": {
             "post": {
                 "tags": [
                     "Currencies V1"
                 ],
                 "summary": "Retorna informacões da uma ou varias moedas",
                 "description": "Essa rota tem a função de realizar uma busca de informações sobre uma terminada moedas, para isso foi usado uma técnica de Crawling se utilizando do código ou numero ISO 4217 (padrão internacional que define códigos de três letras para as moedas) para efetuar a captura dos dados.",
-                "operationId": "2ff5a5b199777b9941e6443199154e5d",
+                "operationId": "8c7b96089041d8567c65646fceab47e1",
                 "requestBody": {
                     "description": "É possível realiza a busca de várias maneiras utilizando as propriedades code, code_list, number ou number_list.",
                     "required": true,
