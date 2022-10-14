@@ -25,6 +25,7 @@ COPY ./docker/php.ini /usr/local/etc/php/php.ini
 WORKDIR /app
 RUN ["cp", ".env.example", ".env"]
 RUN composer install --no-cache --optimize-autoloader --no-dev
+RUN chown -R www-data:www-data *
 
 ## Apache configuration
 RUN a2enmod rewrite; \
