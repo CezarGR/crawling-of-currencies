@@ -86,7 +86,6 @@ class CurrencyController extends Controller
             
         } catch (Exception $exception) {
             DB::rollBack();
-            dd($exception);
             return json_error_response(
                 empty($exception->getMessage()) ? 
                     "Erro ao rastrear informações sobre determinada moeda/moedas" : 
