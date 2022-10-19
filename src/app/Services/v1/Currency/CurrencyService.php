@@ -26,6 +26,7 @@ class CurrencyService
 
     private function searchByCode(array $codes, CurrencyCrawlingService $service) 
     {
+        $codes = array_map( 'strtoupper', $codes);
         $currencies = Currency::useCache()
             ->whereInCache('code', $codes)
             ->getCache()

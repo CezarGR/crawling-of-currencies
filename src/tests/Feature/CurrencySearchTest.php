@@ -179,6 +179,31 @@ class CurrencySearchTest extends TestCase
         ]);
     }
 
+    public function test_v1_serd_request_search_currencies_by_code_with_lowercase_letterss()
+    {
+        $response = $this->post(
+            route('currencies.v1.search'),
+            [
+                'code_list' => ['brl']
+            ]
+        );
+
+        $response->assertSuccessful();
+        $response->assertJson([
+            'message' => 'Informações sobre a moeda retornada com sucesso', 
+            "data" => [
+                [
+                    "name" => "Real",
+                    "code" => "BRL",
+                    "number" => "986",
+                    "symbol" => "R$",
+                    "decimal_places" => 2,
+                    "locations" => true
+                ]
+            ]
+        ]);
+    }
+
     // V2
 
     public function test_v2_search_currency_by_code()
@@ -348,6 +373,139 @@ class CurrencySearchTest extends TestCase
         $response->assertJson([
             'message' => 'Um erro inesperado aconteceu.', 
             'erros' => true
+        ]);
+    }
+
+    public function test_v2_serd_request_search_currencies_by_codes_invalids()
+    {
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => ['BRLBRL']
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => [
+                "codes.0" => [
+                    "É necessário que o cógido tenho 3 caracteres"
+                ]
+            ]
+        ]);
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => ['BR']
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => [
+                "codes.0" => [
+                    "É necessário que o cógido tenho 3 caracteres"
+                ]
+            ]
+        ]);
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => ['BRL', '123']
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => [
+                "codes.1" => [
+                    "É necessário que o cógido seja composto somente por letras"
+                ]
+            ]
+        ]);
+    }
+
+    public function test_v2_serd_request_search_currencies_by_numbers_invalids()
+    {
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'numbers' => ['1232']
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => [
+                "numbers.0" => [
+                    "É necessário que o cógido tenho 3 caracteres númerico"
+                ]
+            ]
+        ]);
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'numbers' => ['12']
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => [
+                "numbers.0" => [
+                    "É necessário que o cógido tenho 3 caracteres númerico"
+                ]
+            ]
+        ]);
+
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'numbers' => ['036', 'BRL']
+            ]
+        );
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'Um erro inesperado aconteceu.', 
+            'erros' => [
+                "numbers.1" => [
+                    "É necessário que a sequência  seja composto somente por números"
+                ]
+            ]
+        ]);
+    }
+
+    public function test_v2_serd_request_search_currencies_by_code_with_lowercase_letterss()
+    {
+        $response = $this->post(
+            route('currencies.v2.search'),
+            [
+                'codes' => ['brl']
+            ]
+        );
+
+        $response->assertSuccessful();
+        $response->assertJson([
+            'message' => 'Informações sobre a moeda retornada com sucesso', 
+            "data" => [
+                [
+                    "name" => "Real",
+                    "code" => "BRL",
+                    "number" => "986",
+                    "symbol" => "R$",
+                    "decimal_places" => 2,
+                    "locations" => true
+                ]
+            ]
         ]);
     }
 }
