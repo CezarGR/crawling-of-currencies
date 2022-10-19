@@ -25,14 +25,14 @@ class CurrencyCrawlingRequest extends FormRequest
     public function messages()
     {
         return [
-            'numbers.required_without' => 'É necessario passar o campo numbers',
-            'codes.required_without' => 'É necessario passar o campo codes',
-            'codes.*.string' => 'Código inválido',
-            'codes.*.min' => 'Código inválido',
-            'codes.*.max' => 'Código inválido',
-            'numbers.*.string' => 'Número inválido',
-            'numbers.*.min' => 'Número inválido',
-            'numbers.*.max' => 'Número inválido',
+            'numbers.required_without' => 'É necessário passar o campo numbers',
+            'codes.required_without' => 'É necessário passar o campo codes',
+            'codes.*.string' => 'É necessário que o código seja do tipo texto',
+            'codes.min' => 'É necessário conter pelo menos um código',
+            'codes.*.max' => 'É necessário que o cógido tenho 3 caracteres',
+            'numbers.*.string' => 'É necessário que a sequência numérica seja do tipo texto',
+            'numbers.min' => 'É necessário conter pelo menos um número',
+            'numbers.*.max' => 'É necessário que o cógido tenho 3 caracteres númerico',
         ];
     }
 }
