@@ -16,7 +16,7 @@ class CurrencyRepository
                 'number' => $item->number,
                 'name' => $item->name,
                 'symbol' => $item->symbol,
-                'decimal_places' => $item->decimalPlaces
+                'decimal_places' => $item->decimalPlaces ?? 0
             ]);
 
             (new CurrencyLocationRepository)->insert($item->locations, $currency->id);

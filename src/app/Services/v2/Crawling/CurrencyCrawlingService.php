@@ -68,12 +68,32 @@ class CurrencyCrawlingService
                     'decimal_places' => ($table->children('td'))->eq(2)->text(),
                     'name' => ($table->children('td'))->eq(3)->text(),
                     'locations' => ($table->children('td'))->eq(4)->text(),
-                    'icons' => ($table->children('td'))->eq(4)->children('img')->each(function ($item) {
-                        return $item->attr('src');
-                    }),
+                    'icons' => ($table->children('td'))->eq(4)->each(function ($item) {
+                        $icons = collect((object)[]);
+                        $flagsOfTagImg = ($item->children('img')->each(function ($img) {
+                            return $img->attr('src');
+                        }));
+
+                        $flagsOfTagSpan = collect(
+                            $item->children('span')->each(function ($span) {
+                                return $span->children('img')->each(function ($record) {
+                                    return $record->attr('src');
+                                });
+                            })
+                        )?->first() ?? [];
+
+                        $icons->push(...$flagsOfTagImg);
+                        $icons->push(...$flagsOfTagSpan);
+
+                        return $icons->toArray();
+                    })[0]
                 ];
             });
         
+        if (empty($codes) && empty($numbers)) {
+            return collect($currencies);
+        }
+
         return empty($codes) ? 
             collect($currencies)->whereIn('number', $numbers) :
             collect($currencies)->whereIn('code', $codes);
@@ -102,6 +122,10 @@ class CurrencyCrawlingService
                 ];
             });
         
+        if (empty($codes) && empty($numbers)) {
+            return collect($currencies);
+        }
+
         return empty($codes) ? 
             collect($currencies)->whereIn('number', $numbers) :
             collect($currencies)->whereIn('code', $codes);  

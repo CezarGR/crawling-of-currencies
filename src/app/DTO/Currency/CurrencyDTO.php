@@ -49,7 +49,7 @@ class CurrencyDTO
             name: $crawlingCurrencyDTO->name,
             number: $crawlingCurrencyDTO->number,
             code: $crawlingCurrencyDTO->code,
-            decimalPlaces: $crawlingCurrencyDTO->decimalPlaces,
+            decimalPlaces: in_array($crawlingCurrencyDTO->decimalPlaces, ['.', '?', ' ', '']) ? 0 : (int) $crawlingCurrencyDTO->decimalPlaces,
             symbol:  $crawlingCurrencyDTO->symbol,
             locations: collect($crawlingCurrencyDTO->locations)
                 ->map(function ($item) {

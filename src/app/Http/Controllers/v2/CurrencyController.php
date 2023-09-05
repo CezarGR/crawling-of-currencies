@@ -5,6 +5,7 @@ namespace App\Http\Controllers\v2;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\v2\CurrencyCrawlingRequest;
 use App\Http\Resources\v2\CurrencySearchResource;
+use App\Http\Resources\v2\ListCurrencyResource;
 use App\Services\v2\Currency\CurrencyService;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -75,7 +76,7 @@ class CurrencyController extends Controller
                 $request->numbers
             );
             
-            DB::commit();
+            //DB::commit();
             
             return json_success_response(
                 CurrencySearchResource::collection($record),
@@ -86,6 +87,26 @@ class CurrencyController extends Controller
             
         } catch (Exception $exception) {
             DB::rollBack();
+            return json_error_response(
+                empty($exception->getMessage()) ? 
+                    "Erro ao rastrear informações sobre determinada moeda/moedas" : 
+                    $exception->getMessage()
+                );
+        }
+    }
+
+    public function list(CurrencyService $service)
+    {
+        try {
+            $record = $service->listCurrencies();
+            
+            
+            return json_success_response(
+                ListCurrencyResource::collection($record),
+                'Informações retornada com sucesso'  
+            );
+            
+        } catch (Exception $exception) {
             return json_error_response(
                 empty($exception->getMessage()) ? 
                     "Erro ao rastrear informações sobre determinada moeda/moedas" : 

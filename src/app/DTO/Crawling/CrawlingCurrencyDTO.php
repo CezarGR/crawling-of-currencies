@@ -22,7 +22,7 @@ class CrawlingCurrencyDTO
         $this->name = $name;
         $this->number = $number;
         $this->code = $code;
-        $this->decimalPlaces = $decimalPlaces;
+        $this->decimalPlaces = in_array($decimalPlaces, ['.', '?', ' ', '']) ? 0 : (int) $decimalPlaces;
         $this->symbol = $symbol;
         $this->locations = $locations;
     }

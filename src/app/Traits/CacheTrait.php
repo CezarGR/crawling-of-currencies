@@ -22,7 +22,7 @@ trait CacheTrait
         $instance->isUseCache = true;
         $instance->cacheName = $cacheName;
         
-        $instance->cacheData = Cache::remember($cacheName, 300, fn () => self::all());
+        $instance->cacheData = Cache::remember($cacheName, 1, fn () => self::all());
       
         return $instance;
     }

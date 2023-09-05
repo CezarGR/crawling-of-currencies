@@ -42,7 +42,6 @@ class CurrencyService
         }
 
         $codes = array_diff($codes ?? [], $currencies->pluck('code')->toArray());
-
         $crawlingCurrencyDTOs = $this->service->crawlCurrency($codes, null);
 
         throw_if(
@@ -100,5 +99,10 @@ class CurrencyService
         (new CurrencyRepository)->insert($dtos);
 
         return $dtos;
+    }
+
+    public function listCurrencies() : Collection
+    {
+        return (new CurrencyRepository)->list();
     }
 }
